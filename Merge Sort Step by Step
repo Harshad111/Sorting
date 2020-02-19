@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+void merge(int A[],int L[],int R[],int n,int l,int r){
+    //int n=sizeof(A)/sizeof(A[0]);
+    //int l=sizeof(L)/sizeof(L[0]);
+    //int r=sizeof(R)/sizeof(R[0]);
+    int i=0,j=0,k=0;
+    while(j<r&&i<l){
+        if(L[i]<=R[j]&&i<l)
+            A[k++]=L[i++];
+        else if(L[i]>R[j]&&j<r)
+                A[k++]=R[j++];
+    }
+    while(i<l) A[k++]=L[i++];
+    while(j<r) A[k++]=R[j++];
+    cout<<"MERGED DATA : ";
+    for(int x=0;x<n;x++)
+        cout<<A[x]<<" ";
+    cout<<endl;
+}
+void mergeSort(int A[],int size){
+    //int size = sizeof(A)/sizeof(A[0]);
+    cout<<"INPUT FOR SORT : ";
+    for(int x=0;x<size;x++)
+        cout<<A[x]<<" ";
+    cout<<endl;
+    //LOGIC ...
+    if(size==1) 
+        return;
+    int mid = size/2;
+    int left[mid];
+    int right[size-mid];
+    int i=0;
+    while(i<mid){
+        left[i]=A[i];
+        i++;
+    }
+    while(i<size)
+        right[i-mid]=A[i++];
+    //OUTPUT FOR UNDERSTANDING ...
+    cout<<"LEFT : ";
+    for(int x=0;x<mid;x++)
+        cout<<left[x]<<" ";
+    cout<<endl;
+    cout<<"RIGHT : ";
+    for(int x=0;x<size-mid;x++)
+        cout<<right[x]<<" ";
+    cout<<endl;
+    mergeSort(left,mid);
+    mergeSort(right,size-mid);
+    merge(A,left,right,size,mid,size-mid);
+}
+int main() {
+	int A[8]={2,4,1,6,8,5,3,7};
+	mergeSort(A,8);
+	cout<<"RESULT : "; 
+	for(int i=0;i<8;i++)
+	    cout<<A[i]<<" - ";
+	return 0;
+}
